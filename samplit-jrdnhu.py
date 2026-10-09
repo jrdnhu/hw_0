@@ -1,6 +1,7 @@
 import random 
 import sys 
 
+# Script that randomly samples 1% of lines from files
 with open(sys.argv[1], "r") as file:
     for line in file:
         if random.random() < 0.01:
