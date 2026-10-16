@@ -40,7 +40,7 @@ def time_view(request):
 
 def sum_view(request):
     total = float(request.GET["n1"]) + float(request.GET["n2"]) 
-    return HttpResponse(f"{"sum":total}")
+    return HttpResponse(f"<p>{total}</p>")
 
 # ---------------------------------------------------------------------------
 # HW4  — user creation
