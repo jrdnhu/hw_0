@@ -33,7 +33,14 @@ def index(request):
     context = {}
     return render(request, 'app/index.html', context)
 
+def time_view(request):
+    date = datetime.now(CDT)
+    time = date.strftime("%H : %M")
+    return HttpResponse(time)
 
+def sum_view(request):
+    total = float(request.GET["n1"]) + float(request.GET["n2"]) 
+    return JsonResponse({"sum" : total})
 
 # ---------------------------------------------------------------------------
 # HW4  — user creation
