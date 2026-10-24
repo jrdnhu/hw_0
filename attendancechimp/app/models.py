@@ -89,6 +89,7 @@ class QRCodeUpload(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     lecture = models.ForeignKey(Lecture, null=True, blank=True, on_delete=models.SET_NULL)
     image = models.FileField(upload_to="qrcodes/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
 # ---------------------------------------------------------------------------
 # Helper / API functions
