@@ -51,9 +51,9 @@ class Course(models.Model):
     """
     Represents a Course taught by a single Instructor. Stores course name, instructor, and meeting schedule. 
     """
-    name = models.CharField()
+    name = models.CharField(max_length=500)
     instructor = models.ForeignKey(InstructorProfile, on_delete=models.PROTECT)
-    meeting_schedule = models.CharField()
+    meeting_schedule = models.CharField(max_length=500)
 
 
 # ---------------------------------------------------------------------------
@@ -76,7 +76,7 @@ class Lecture(models.Model):
     """
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     date = models.DateTimeField()
-    qr_identifier = models.CharField(unique=True)
+    qr_identifier = models.CharField(unique=True, max_length=500)
 
 
 # ---------------------------------------------------------------------------
