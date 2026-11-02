@@ -19,6 +19,7 @@ import io
 # from .models import (InstructorProfile, StudentProfile, Course, Enrollment,
 #                      Lecture, QRCodeUpload, is_instructor, is_student,
 #                      getUploadsForCourse)
+from .models import StudentProfile, InstructorProfile
 
 CDT = zoneinfo.ZoneInfo("America/Chicago")
 
@@ -30,7 +31,10 @@ CDT = zoneinfo.ZoneInfo("America/Chicago")
 def index(request):
     """Render the home page (index.html)."""
 
-    context = {}
+    context = {
+        "current_time": datetime.now(CDT).strftime("%H:%M"),
+        "user": request.user,
+    }
     return render(request, 'app/index.html', context)
 
 def time_view(request):
@@ -46,7 +50,36 @@ def sum_view(request):
 # HW4  — user creation
 # ---------------------------------------------------------------------------
 
+def new(request):
+    if request.method != "GET":
+        return HttpResponse("Only GET requests allowed", status=400)
+    return render(request, "app/new.html")
 
+@csrf_exempt
+def createUser(request):
+    if request.method != "POST":
+        return HttpResponse("Only POST requests allowed", status=400)
+
+    email = request.POST.get("email", "")
+    user_name = request.POST.get("user_name", "")
+    password = request.POST.get("password", "")
+    is_student = request.POST.get("is_student", "")
+
+    if User.objects.filter(email = email).exists():
+        return HttpResponse("Email already registered", status=400)
+    
+    user = User.objects.create_user(
+        username=user_name,
+        email=email,
+        password=password,
+    )
+    if is_student == "1":
+        StudentProfile.objects.create(user=user)
+    else:
+        InstructorProfile.objects.create(user=user)
+    
+    login(request, user)
+    return HttpResponse("User creation succeeded", status=200)
 
 # ---------------------------------------------------------------------------
 # HW5  — courses, lectures, QR uploads, dump

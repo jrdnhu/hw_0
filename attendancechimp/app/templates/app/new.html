@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+
+<body>
+<h1>Sign Up</h1>
+
+<form action="/app/createUser" method="post">
+    {% csrf_token %}
+
+    <label>Username: <input type="text" name="user_name" required> </label>
+    <br><br>
+
+    <label>Email: <input type="email" name="email" required> </label>
+    <br><br>
+
+    <label>Password: <input type="password" name="password" required> </label>
+    <br><br>
+
+    <label> <input type="radio" name="is_student" value="1" required> Student </label>
+    <label> <input type="radio" name="is_student" value="0" required> Instructor </label>
+    <br><br>
+
+    <button type="submit">Sign Up</button>
+
+</form>
+
+</body>
+</html>
